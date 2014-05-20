@@ -114,6 +114,7 @@ private:
 
     bool inited;
     std::string droneFrameId;
+    std::string cameraFrontInfoUrl;
 
     // Load auto-generated declarations for full navdata
     #define NAVDATA_STRUCTS_HEADER_PRIVATE

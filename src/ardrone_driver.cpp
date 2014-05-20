@@ -39,6 +39,11 @@ ARDroneDriver::ARDroneDriver()
     //	setEnemyColor_service = node_handle.advertiseService("/ardrone/setenemycolor", setEnemyColorCallback);
     //	setHullType_service = node_handle.advertiseService("/ardrone/sethulltype", setHullTypeCallback);
 
+
+    cameraFrontInfoUrl = (ros::param::get("~front_camera_info_url", cameraFrontInfoUrl)) ? cameraFrontInfoUrl : "ardrone_front";
+    ROS_INFO_STREAM("Reading camera info from " << cameraFrontInfoUrl);
+
+
     droneFrameId = (ros::param::get("~drone_frame_id", droneFrameId)) ? droneFrameId : "ardrone_base";
     droneFrameBase = droneFrameId + "_link";
     droneFrameIMU = droneFrameId + "_imu";
@@ -71,7 +76,7 @@ ARDroneDriver::ARDroneDriver()
     }
 
     // Camera Info Manager
-    cinfo_hori_ = new camera_info_manager::CameraInfoManager(ros::NodeHandle("ardrone/front"), "ardrone_front");
+    cinfo_hori_ = new camera_info_manager::CameraInfoManager(ros::NodeHandle("ardrone/front"), cameraFrontInfoUrl);
     cinfo_vert_ = new camera_info_manager::CameraInfoManager(ros::NodeHandle("ardrone/bottom"), "ardrone_bottom");
 
     // TF Stuff
